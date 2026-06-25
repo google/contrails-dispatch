@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright 2026 Google LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<FlightPlan xmlns="XXX" xmlns:lsya="XXX" xmlns:xsi="XXX" flightPlanId="OFP_TEMPLATE_01" category="normal" computedTime="2025-01-01T00:00:00" xsi:schemaLocation="XXX">
+  <M633Header timestamp="2025-01-01T00:00:00Z" versionNumber="3" />
+  <M633SupplementaryHeader>
+    <Flight flightOriginDate="2025-01-01Z" scheduledTimeOfDeparture="2025-01-01T12:00:00Z">
+      <FlightIdentification>
+        <FlightIdentifier>XXX000</FlightIdentifier>
+        <FlightNumber airlineIATACode="XX" number="000">
+          <CommercialFlightNumber>XX000</CommercialFlightNumber>
+        </FlightNumber>
+      </FlightIdentification>
+      <DepartureAirport airportFunction="DepartureAirport" airportName="ORIGIN INTL">
+        <AirportICAOCode>AAAA</AirportICAOCode>
+        <AirportIATACode>AAA</AirportIATACode>
+      </DepartureAirport>
+      <ArrivalAirport airportFunction="ArrivalAirport" airportName="DESTINATION INTL">
+        <AirportICAOCode>BBBB</AirportICAOCode>
+        <AirportIATACode>BBB</AirportIATACode>
+      </ArrivalAirport>
+    </Flight>
+    <Aircraft aircraftRegistration="REG001">
+      <AircraftModel>
+        <AircraftICAOType>B77W</AircraftICAOType>
+      </AircraftModel>
+    </Aircraft>
+  </M633SupplementaryHeader>
+  <Waypoints>
+    <Waypoint sequenceId="1" waypointId="ORIG" waypointName="ORIG" waypointLongName="ORIGIN INTL" countryICAOCode="XX">
+      <Coordinates latitude="+00000" longitude="+000000">N0000.0 E00000.0</Coordinates>
+      <Altitude>
+        <EstimatedAltitude><Value unit="ft/100">0</Value></EstimatedAltitude>
+      </Altitude>
+      <RemainingGroundDistance><Value unit="NM">5800</Value></RemainingGroundDistance>
+      <TimeOverWaypoint>
+        <EstimatedTime><Value>2025-01-01T12:00:00Z</Value></EstimatedTime>
+      </TimeOverWaypoint>
+      <Function>DepartureAirport</Function>
+    </Waypoint>
+    <Waypoint sequenceId="2" waypointId="T_O_C" waypointName="T_O_C">
+      <Coordinates latitude="+10000" longitude="+100000">N1000.0 E10000.0</Coordinates>
+      <Altitude>
+        <EstimatedAltitude><Value unit="ft/100">310</Value></EstimatedAltitude>
+      </Altitude>
+      <RemainingGroundDistance><Value unit="NM">5600</Value></RemainingGroundDistance>
+      <TimeOverWaypoint>
+        <EstimatedTime><Value>2025-01-01T12:30:00Z</Value></EstimatedTime>
+      </TimeOverWaypoint>
+      <Function>TopOfClimb</Function>
+    </Waypoint>
+    <Waypoint sequenceId="3" waypointId="T_O_D" waypointName="T_O_D">
+      <Coordinates latitude="+20000" longitude="-100000">N2000.0 W10000.0</Coordinates>
+      <Altitude>
+        <EstimatedAltitude><Value unit="ft/100">350</Value></EstimatedAltitude>
+      </Altitude>
+      <RemainingGroundDistance><Value unit="NM">150</Value></RemainingGroundDistance>
+      <TimeOverWaypoint>
+        <EstimatedTime><Value>2025-01-01T22:30:00Z</Value></EstimatedTime>
+      </TimeOverWaypoint>
+      <Function>TopOfDescent</Function>
+    </Waypoint>
+    <Waypoint sequenceId="4" waypointId="DEST" waypointName="DEST" waypointLongName="DESTINATION INTL" countryICAOCode="YY">
+      <Coordinates latitude="+30000" longitude="-120000">N3000.0 W12000.0</Coordinates>
+      <Altitude>
+        <EstimatedAltitude><Value unit="ft/100">0</Value></EstimatedAltitude>
+      </Altitude>
+      <RemainingGroundDistance><Value unit="NM">0</Value></RemainingGroundDistance>
+      <TimeOverWaypoint>
+        <EstimatedTime><Value>2025-01-01T23:00:00Z</Value></EstimatedTime>
+      </TimeOverWaypoint>
+      <Function>ArrivalAirport</Function>
+    </Waypoint>
+  </Waypoints>
+  <FlightPlanSummary>
+    <ScheduledTimeOfArrival>2025-01-01T23:00:00Z</ScheduledTimeOfArrival>
+    <OutTime><EstimatedTime><Value>2025-01-01T11:40:00Z</Value></EstimatedTime></OutTime>
+    <OffTime><EstimatedTime><Value>2025-01-01T12:00:00Z</Value></EstimatedTime></OffTime>
+    <OnTime><EstimatedTime><Value>2025-01-01T23:00:00Z</Value></EstimatedTime></OnTime>
+    <InTime><EstimatedTime><Value>2025-01-01T23:20:00Z</Value></EstimatedTime></InTime>
+    <BlockTime><EstimatedTime><Value>PT11H40M00S</Value></EstimatedTime></BlockTime>
+    <FlightTime><EstimatedTime><Value>PT11H00M00S</Value></EstimatedTime></FlightTime>
+  </FlightPlanSummary>
+</FlightPlan>

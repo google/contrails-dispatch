@@ -1,0 +1,8 @@
+functions-framework==3.8.1
+google-cloud-bigquery==3.20.1
+google-cloud-logging
+pycontrails[gcp,pyproj]>=0.49.0
+numpy>=1.24.0
+netcdf4
+h5netcdf
+

@@ -1,0 +1,74 @@
+[
+  {
+    "name": "flight_identifier",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "The alphanumeric code assigned by an airline to a scheduled flight (e.g., CA123)."
+  },
+  {
+    "name": "departure_airport_icao",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "The ICAO code for the airport where the flight originates (e.g., KJFK)."
+  },
+  {
+    "name": "arrival_airport_icao",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "The ICAO code for the airport where the flight concludes (e.g., LSZH)."
+  },
+  {
+    "name": "aircraft_type",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "The ICAO code for the aircraft type (e.g., A35K)."
+  },
+  {
+    "name": "aircraft_registration",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "The unique registration identifier of the aircraft (tail number, e.g., B-LPP)."
+  },
+  {
+    "name": "origin_date",
+    "mode": "NULLABLE",
+    "type": "DATE",
+    "description": "The date on which the flight is scheduled to begin."
+  },
+  {
+    "name": "departure_planned_at",
+    "mode": "NULLABLE",
+    "type": "TIMESTAMP",
+    "description": "The planned date and time of departure."
+  },
+  {
+    "name": "arrival_planned_at",
+    "mode": "NULLABLE",
+    "type": "TIMESTAMP",
+    "description": "The planned date and time of arrival."
+  },
+  {
+    "name": "last_updated_at",
+    "mode": "NULLABLE",
+    "type": "TIMESTAMP",
+    "description": "The timestamp indicating when the flight plan was last modified."
+  },
+  {
+    "name": "total_forcing_joules",
+    "mode": "NULLABLE",
+    "type": "FLOAT",
+    "description": "The total expected effective energy forcing of the forecasted contrails impact in Joules."
+  },
+  {
+    "name": "flight_plan_json",
+    "mode": "NULLABLE",
+    "type": "STRING",
+    "description": "The parsed flight plan stored as a JSON string."
+  },
+  {
+    "name": "bq_last_update_timestamp",
+    "mode": "NULLABLE",
+    "type": "TIMESTAMP",
+    "description": "The timestamp indicating when the record was last updated in BigQuery."
+  }
+]

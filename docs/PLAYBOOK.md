@@ -1,5 +1,7 @@
 # Contrail Avoidance Playbook
 
+<!-- Copyright 2026 Google LLC -->
+
 ## Introduction
 
 The primary goal of this guide is to enable easy onboarding to navigational contrail avoidance, helping your airline reduce their climate impact and gather operational insights related to non-CO₂ aviation effect, even if your team is entirely new to the field. This document provides an introduction to the available tools, identifying high-impact flights, and executing efficient avoidance strategies. The following sections will define the climate impact of contrails, explain the mechanics of avoidance, and outline how to prioritize and plan these flights.
@@ -131,13 +133,13 @@ To calculate the CO2-equivalent impact emissions, the pipeline converts flight p
 ```
 
 #### Data storage (BigQuery)
-Each processed row is saved in `APPEND_ONLY` mode into a historical BigQuery table. This schema captures essential data elements such as the flight number, origin and destination IATA codes, aircraft type and registration, planned departure and arrival timestamps, and the calculated `CO2E_kg`.
+Each processed row is saved in `APPEND_ONLY` mode into a historical BigQuery table. This schema captures essential data elements such as the flight number, origin and destination ICAO codes, aircraft type and registration, planned departure and arrival timestamps, and the calculated `total_forcing_joules`.
 
 | field name | mode | type | description |
 | ----- | ----- | ----- | ----- |
-| flight_number | NULLABLE | STRING | A unique identifier for a specific air journey. |
-| departure_airport_iata | NULLABLE | STRING | The IATA code for the airport where the journey originates. |
-| arrival_airport_iata | NULLABLE | STRING | The IATA code for the airport where the journey concludes. |
+| flight_identifier | NULLABLE | STRING | The alphanumeric code assigned by an airline to a scheduled flight (e.g., CA123). |
+| departure_airport_icao | NULLABLE | STRING | The ICAO code for the airport where the journey originates. |
+| arrival_airport_icao | NULLABLE | STRING | The ICAO code for the airport where the journey concludes. |
 | aircraft_type | NULLABLE | STRING | The model or type of aircraft used for the journey. |
 | aircraft_registration | NULLABLE | STRING | The unique registration identifier of the aircraft. |
 | origin_date | NULLABLE | DATE | The calendar date on which the journey is scheduled to begin. |
@@ -159,23 +161,23 @@ To support your flight planners, a BigQuery View filters for the *latest version
 
 ```sql
 SELECT
- flight_number,
- departure_airport_iata,
- arrival_airport_iata,
+ flight_identifier,
+ departure_airport_icao,
+ arrival_airport_icao,
  aircraft_type,
  aircraft_registration,
  origin_date,
  departure_planned_at,
  arrival_planned_at,
  last_updated_at,
- CO2E_kg,
+ total_forcing_joules,
  bq_last_update_timestamp
-FROM `PROJECT_ID.DATASET_ID.flight_plan_co2e_history`
+FROM `PROJECT_ID.DATASET_ID.contrails_impact_history`
 QUALIFY
  ROW_NUMBER()
    OVER (
      PARTITION BY
-       flight_number, departure_airport_iata, arrival_airport_iata, origin_date
+       flight_identifier, departure_airport_icao, arrival_airport_icao, origin_date
      ORDER BY last_updated_at DESC
    )
  = 1
