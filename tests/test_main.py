@@ -92,6 +92,7 @@ def test_process_flight_plan_success(
     args, _ = main.bq_client.insert_rows_json.call_args
     row = args[1][0]
 
-    assert row["flight_identifier"] == "XX000"
+    assert row["flight_commercial_number"] == "XX000"
     assert row["departure_airport_icao"] == "AAAA"
+    assert row["last_updated_at"] == "2025-01-01T00:00:00+00:00"
     assert isinstance(row["total_forcing_joules"], float)

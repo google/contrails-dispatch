@@ -17,7 +17,6 @@ import os
 import json
 import logging
 from datetime import datetime, timezone
-import xml.etree.ElementTree as ET
 import functions_framework
 import numpy as np
 from pycontrails.core import flightplan
@@ -77,16 +76,13 @@ def process_flight_plan(cloud_event):
     try:
         logger.info("Parsing flight plan...")
         flight = flightplan.parse_ofp_xml(pubsub_message)
-        logger.info("Parsed flight: %s", flight.attrs.get('flight_number'))
+        logger.info("Parsed flight: %s", flight.attrs.get("flight_number"))
 
-        # Extract computedTime from XML
-        # NOTE: This causes double XML parsing. Currently required because pycontrails'
-        # parse_ofp_xml does not return the computedTime attribute.
-        # TODO: Remove this manual parsing once pycontrails supports extracting this attribute.
-        computed_time_str = _get_computed_time(pubsub_message, logger)
-
-        if not computed_time_str:
-            raise ValueError("Missing or invalid computedTime in flight plan XML")
+        last_updated_at = flight.attrs.get("flight_plan_timestamp")
+        if not last_updated_at:
+            raise ValueError(
+                "Missing or invalid flight_plan_timestamp in parsed flight plan"
+            )
     except Exception as e:
         logger.error("Permanent error during parsing: %s", e)
         _write_to_dlq(_build_dlq_payload(cloud_event, pubsub_message), f"Parsing Error: {str(e)}", logger)
@@ -140,7 +136,7 @@ def process_flight_plan(cloud_event):
         # Map attributes to the requested schema
         row_to_insert = [
             {
-                "flight_identifier": flight.attrs.get("flight_number"),
+                "flight_commercial_number": flight.attrs.get("flight_number"),
                 "departure_airport_icao": flight.attrs.get("departure_airport"),
                 "arrival_airport_icao": flight.attrs.get("arrival_airport"),
                 "aircraft_type": flight.attrs.get("aircraft_type"),
@@ -154,7 +150,7 @@ def process_flight_plan(cloud_event):
                 "arrival_planned_at": (
                     flight.time_end.isoformat() if flight.time_end else None
                 ),
-                "last_updated_at": computed_time_str,
+                "last_updated_at": last_updated_at.isoformat(),
                 "total_forcing_joules": total_forcing_j,
                 "flight_plan_json": flight_plan_json,
                 "bq_last_update_timestamp": now_utc,
@@ -180,22 +176,6 @@ def process_flight_plan(cloud_event):
         logger.exception("Transient or unexpected error during flight plan processing: %s", e)
         raise # Bubble up to trigger Pub/Sub retry
 
-
-def _get_computed_time(xml_str, logger) -> str | None:
-    """Extracts computedTime attribute from the root of the FlightPlan XML."""
-    try:
-        root = ET.fromstring(xml_str)
-        computed_time_str = root.get('computedTime')
-        if not computed_time_str:
-            return None
-
-        dt = datetime.fromisoformat(computed_time_str)
-        if dt.tzinfo is None:
-            dt = dt.replace(tzinfo=timezone.utc)
-        return dt.isoformat()
-    except Exception as e:
-        logger.warning("Could not extract or parse computedTime from XML: %s", e)
-        return None
 
 
 def _build_dlq_payload(cloud_event, xml_payload="N/A") -> dict[str, any]:

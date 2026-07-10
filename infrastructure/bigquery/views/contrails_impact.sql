@@ -13,7 +13,7 @@
 -- limitations under the License.
 
 SELECT
-  flight_identifier,
+  flight_commercial_number,
   departure_airport_icao,
   arrival_airport_icao,
   aircraft_type,
@@ -30,7 +30,7 @@ QUALIFY
   ROW_NUMBER()
     OVER (
       PARTITION BY
-        flight_identifier, departure_airport_icao, arrival_airport_icao, origin_date
+        flight_commercial_number, departure_airport_icao, arrival_airport_icao, origin_date
       ORDER BY last_updated_at DESC, bq_last_update_timestamp DESC
     )
   = 1

@@ -1,6 +1,6 @@
 [
   {
-    "name": "flight_identifier",
+    "name": "flight_commercial_number",
     "mode": "NULLABLE",
     "type": "STRING",
     "description": "The alphanumeric code assigned by an airline to a scheduled flight (e.g., CA123)."
