@@ -84,7 +84,7 @@ To get a stackranked list of air journeys for a specific day based on their clim
 Run this query in the BigQuery Console (uses the deduplicated View):
 ```sql
 SELECT
-  flight_identifier,
+  flight_commercial_number,
   departure_airport_icao,
   arrival_airport_icao,
   total_forcing_joules
@@ -101,7 +101,7 @@ ORDER BY total_forcing_joules DESC;
 
 #### Option B: Looker Studio (Recommended)
 1.  Connect Looker Studio to the `contrails_impact` BigQuery view.
-2.  Add a **Table** chart with dimensions: `flight_identifier`, `departure_airport_icao`, `arrival_airport_icao`.
+2.  Add a **Table** chart with dimensions: `flight_commercial_number`, `departure_airport_icao`, `arrival_airport_icao`.
 3.  Add `total_forcing_joules` as a **Metric** (SUM).
 4.  Add a **Date Range Control** to filter for specific days.
 5.  Sort the table by `total_forcing_joules` (Descending).
